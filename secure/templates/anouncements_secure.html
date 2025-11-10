@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Announcements (admin panel)</h2>
+<form action="{{ url_for('post_announcement') }}" method="post">
+  <label>Titre: <input name="title"></label><br><br>
+  <label>Contenu HTML autorisé (WYSIWYG demo):<br>
+  <textarea name="body" rows="6" cols="80"></textarea></label><br><br>
+  <button type="submit">Publier</button>
+</form>
+
+<hr>
+<h3>Published</h3>
+{% for a in announcements %}
+  <div class="announcement">
+    <strong>{{ a.title }}</strong> <em>{{ a.date }}</em><br>
+    <!-- VULN: affichage non échappé -->
+    <div>{{ a.body }}</div>
+  </div>
+{% else %}
+  <p>Aucune annonce.</p>
+{% endfor %}
+{% endblock %}

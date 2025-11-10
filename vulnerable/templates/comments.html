@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Comments</h2>
+<form action="{{ url_for('post_comment') }}" method="post">
+  <label>Nom: <input name="name"></label><br><br>
+  <label>Commentaire:<br>
+  <textarea name="text" rows="4" cols="80"></textarea></label><br><br>
+  <button type="submit">Poster</button>
+</form>
+
+<hr>
+<h3>Historique</h3>
+{% for c in comments %}
+  <div class="comment">
+    <strong>{{ c.name }}</strong> <em>{{ c.date }}</em><br>
+    <!-- VULNÉRABLE: affichage non échappé -->
+    <div>{{ c.text|safe }}</div>
+  </div>
+{% else %}
+  <p>Aucun commentaire.</p>
+{% endfor %}
+{% endblock %}
